@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Navir 🐾</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <i class="fa-solid fa-paw decoracion decor-tl"></i>
+        <i class="fa-solid fa-heart decoracion decor-br"></i>
+
+        <h1>Press Start, Navir 🐾</h1>
+        <p class="subtitle">Selecciona tu nivel...</p>
+        
+        <div id="contador-amor" class="contador-amor">
+            <p>Navir, estamos juntos hace:</p>
+            <div id="reloj">Cargando tiempo...</div>
+        </div>
+        
+        <div class="music-card">
+            <div class="music-cover">
+                ❤️
+            </div>
+            <div class="music-info">
+                <h3>Navir</h3>
+                <p>"Cada canción me recuerda a vos"</p>
+                <div class="player-controls">
+                    <button id="prevBtn">
+                        <i class="fa-solid fa-backward"></i>
+                    </button>
+                    <button id="playBtn">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                    <button id="nextBtn">
+                        <i class="fa-solid fa-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="player"></div>
+        <!-- Reproductor oculto -->
+        <div id="youtube-player" style="display:none;">
+            <iframe
+                id="ytplayer"
+                width="0"
+                height="0"
+                src=""
+                frameborder="0"
+                allow="autoplay"
+            ></iframe>
+        </div>
+        
+        <!-- EL ERROR ESTABA ACÁ: HABÍA UN </div> QUE CORTABA EL CONTENEDOR -->
+
+        <div class="menu-grid">
+            <a href="mimo.html" class="btn-game"><i class="fa-solid fa-gift"></i> ¿Necesitás un mimo?</a>
+            <a href="mes.html" class="btn-game"><i class="fa-solid fa-calendar-check"></i> 1 Mes</a>
+            <a href="cancion.html" class="btn-game"><i class="fa-solid fa-music"></i> Canción</a>
+            <a href="recuerdos.html" class="btn-game"><i class="fa-solid fa-camera-retro"></i> Recuerdos</a>
+            <a href="juegos.html" class="btn-game"><i class="fa-solid fa-gamepad"></i> Mini Juegos</a>
+        </div>
+    </div> <!-- Cierre correcto de game-container -->
+    <script src="script.js"></script>
+</body>
+</html>

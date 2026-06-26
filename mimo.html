@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mimo del día - Navir 🐾</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h2>Mimo del día <i class="fa-solid fa-heart"></i></h2>
+        <div id="frase-mimo" class="cancion-card" style="font-family: var(--hand-font); font-size: 2rem;">
+            Cargando mimo...
+        </div>
+        <a href="index.html" class="btn-back">⬅ Volver</a>
+    </div>
+<script>
+    const frases = [
+        // Frases inspiradas en la canción
+        "La tarde desciende lento y me doy cuenta de que prefiero descubrir el mundo a tu lado. ❄️",
+        "No sé qué tienen tus ojos color canela, pero contigo todo se siente distinto. 🐾",
+        "Prefiero descubrir ese mundo que está en usted, guardar recuerdos que todavía no existen. 💙",
+        "Hay algo en tu forma de ser, tan intensa y hermosa, que me hace pensar sin querer en todo lo que nos queda por ver. ✨",
+        "Me gusta cuando hablas de tus sueños; me encuentro haciéndoles espacio en algún rincón de mi pensar. 🐱",
+        "Quizás algún día volvamos a este mismo lugar y nos riamos recordando cómo empezó todo sin planear. ❄️",
+        
+        // Frases inspiradas en tus recuerdos y sentimientos
+        "Eres una de las cosas que mejor tengo hasta el momento, Navir. 🐾",
+        "Sos lo que buscaba en alguien: compañero, juguetón... simplemente todo. 💙",
+        "No me molesta si estás ocupado, solo saber de vos me alegra el día. 🐱",
+        "¿Me permitirías estar a tu lado y formar parte de tu día a día? 🐾",
+        "Prometo madurar para poder ser digno de ti, mi tesoro más preciado. ✨",
+        "Tenerte conmigo es lo que realmente me hace feliz. ❄️",
+        "Gracias por ser mi compañero en todas las aventuras. 🐾",
+        "Eres mi lugar seguro en este mundo. 💙"
+    ];
+    
+    // Elegimos una frase al azar
+    document.getElementById('frase-mimo').innerText = frases[Math.floor(Math.random() * frases.length)];
+</script>
+</body>
+</html>
