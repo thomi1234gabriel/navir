@@ -122,3 +122,100 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// =========================================
+// LÓGICA PARA AGREGAR RECUERDOS (FIREBASE EN TIEMPO REAL)
+// =========================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+// Tus credenciales exactas de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyC3-ykjxnh4yC-8cThkoEGVPeH2boDwLFI",
+    authDomain: "navir-b8bec.firebaseapp.com",
+    projectId: "navir-b8bec",
+    storageBucket: "navir-b8bec.firebasestorage.app",
+    messagingSenderId: "142103427406",
+    appId: "1:142103427406:web:16afc5b2bd4e2cdcb5461f",
+    measurementId: "G-JM6T0QTCYE"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAdd = document.getElementById('btn-add-memory');
+    const modal = document.getElementById('modal-memory');
+    const btnCerrar = document.getElementById('btn-cerrar-memory');
+    const btnGuardar = document.getElementById('btn-guardar-memory');
+    const textarea = document.getElementById('texto-nuevo-recuerdo');
+    const memoryBoard = document.querySelector('.memory-board');
+
+    if (btnAdd && modal && memoryBoard) {
+        
+        // 1. Abrir y cerrar el modal
+        btnAdd.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            textarea.focus();
+        });
+        
+        btnCerrar.addEventListener('click', () => {
+            modal.style.display = 'none';
+            textarea.value = ''; 
+        });
+
+        // 2. Guardar el recuerdo en Firebase
+        btnGuardar.addEventListener('click', async () => {
+            const texto = textarea.value.trim();
+            if(texto !== "") {
+                try {
+                    // Desactivar botón mientras guarda para evitar duplicados
+                    btnGuardar.disabled = true;
+                    btnGuardar.innerText = "Guardando...";
+
+                    await addDoc(collection(db, "mensajes_navir"), {
+                        texto: texto,
+                        fecha: new Date() // Para ordenarlos por fecha
+                    });
+
+                    textarea.value = "";
+                    modal.style.display = 'none';
+                } catch (e) {
+                    console.error("Error añadiendo el documento: ", e);
+                    alert("Hubo un error al guardar el mensajito. Revisa las reglas de seguridad de Firestore.");
+                } finally {
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerText = "Guardar";
+                }
+            }
+        });
+
+        // 3. Escuchar los mensajes en TIEMPO REAL
+        const q = query(collection(db, "mensajes_navir"), orderBy("fecha", "asc"));
+        
+        onSnapshot(q, (snapshot) => {
+            // Borramos solo las notas de Firebase para no duplicarlas y no borrar tus fotos
+            document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                renderizarNuevoRecuerdo(data.texto);
+            });
+        });
+    }
+
+    function renderizarNuevoRecuerdo(texto) {
+        const div = document.createElement('div');
+        const rot = Math.floor(Math.random() * 5) + 1;
+        
+        // Le agregamos 'nota-firebase' para poder identificarlas
+        div.className = `memory-item note rot-${rot} nota-firebase`;
+        div.style.width = '300px';
+        div.style.textAlign = 'center';
+        
+        div.innerHTML = `<p>"${texto}" <br><br><i class="fa-solid fa-heart" style="color: #e63946;"></i> - <em>Navir</em></p>`;
+        
+        memoryBoard.appendChild(div);
+    }
+});

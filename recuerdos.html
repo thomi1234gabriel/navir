@@ -114,5 +114,21 @@
         <a href="index.html" class="btn-back" style="margin-top: 50px;"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</a>
     </div>
     <script src="script.js"></script>
+    <!-- Agregá esto antes de cerrar el body si no lo tenías -->
+<button id="btn-add-memory" class="btn-flotante"><i class="fa-solid fa-plus"></i></button>
+
+<div id="modal-memory" class="modal-oculto">
+    <div class="modal-contenido">
+        <h3>Dejale un mensajito a tu amor 📝</h3>
+        <textarea id="texto-nuevo-recuerdo" placeholder="Escribí lo que sentís acá..."></textarea>
+        <div class="modal-botones">
+            <button id="btn-guardar-memory" class="btn">Guardar</button>
+            <button id="btn-cerrar-memory" class="btn btn-cancelar">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- IMPORTANTE: Usar type="module" -->
+<script type="module" src="script.js"></script>
 </body>
 </html>

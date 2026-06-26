@@ -660,3 +660,19 @@ h1, h2 {
     .titulo-carta { font-size: 2.8rem; }
     .parrafo-carta { font-size: 1rem; }
 }
+
+.btn-flotante {
+    position: fixed; bottom: 30px; right: 30px; background: var(--marron-suave);
+    color: white; border: none; border-radius: 50%; width: 60px; height: 60px;
+    font-size: 1.8rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.modal-oculto {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
+}
+.modal-contenido {
+    background: #FFFDF9; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px;
+}
+.modal-contenido textarea {
+    width: 100%; height: 120px; margin: 20px 0; padding: 10px; border-radius: 10px;
+}
