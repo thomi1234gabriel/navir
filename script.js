@@ -122,14 +122,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+// =========================================
+// LÓGICA PARA AGREGAR RECUERDOS (FIREBASE)
+// =========================================
 
-// =========================================
-// LÓGICA PARA AGREGAR RECUERDOS (FIREBASE EN TIEMPO REAL)
-// =========================================
+// 1. IMPORTACIONES (SIEMPRE ARRIBA DE TODO)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-// Tus credenciales exactas de Firebase
+// 2. CONFIGURACIÓN
 const firebaseConfig = {
     apiKey: "AIzaSyC3-ykjxnh4yC-8cThkoEGVPeH2boDwLFI",
     authDomain: "navir-b8bec.firebaseapp.com",
@@ -140,10 +141,10 @@ const firebaseConfig = {
     measurementId: "G-JM6T0QTCYE"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// 3. LÓGICA PRINCIPAL
 document.addEventListener("DOMContentLoaded", () => {
     const btnAdd = document.getElementById('btn-add-memory');
     const modal = document.getElementById('modal-memory');
@@ -154,36 +155,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (btnAdd && modal && memoryBoard) {
         
-        // 1. Abrir y cerrar el modal
+        // Abrir modal
         btnAdd.addEventListener('click', () => {
             modal.style.display = 'flex';
             textarea.focus();
         });
         
+        // Cerrar modal
         btnCerrar.addEventListener('click', () => {
             modal.style.display = 'none';
             textarea.value = ''; 
         });
 
-        // 2. Guardar el recuerdo en Firebase
+        // Guardar en Firebase
         btnGuardar.addEventListener('click', async () => {
             const texto = textarea.value.trim();
             if(texto !== "") {
                 try {
-                    // Desactivar botón mientras guarda para evitar duplicados
                     btnGuardar.disabled = true;
                     btnGuardar.innerText = "Guardando...";
 
                     await addDoc(collection(db, "mensajes_navir"), {
                         texto: texto,
-                        fecha: new Date() // Para ordenarlos por fecha
+                        fecha: new Date()
                     });
 
                     textarea.value = "";
                     modal.style.display = 'none';
                 } catch (e) {
-                    console.error("Error añadiendo el documento: ", e);
-                    alert("Hubo un error al guardar el mensajito. Revisa las reglas de seguridad de Firestore.");
+                    console.error("Error: ", e);
+                    alert("Error al guardar.");
                 } finally {
                     btnGuardar.disabled = false;
                     btnGuardar.innerText = "Guardar";
@@ -191,42 +192,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-       // 3. Escuchar los mensajes en TIEMPO REAL y persistirlos
-import { getDocs } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js"; // Asegurate de agregar getDocs a tu import
-
-// ... (dentro de tu DOMContentLoaded) ...
-
-// Función para cargar y mostrar los mensajes
-async function cargarMensajes() {
-    const q = query(collection(db, "mensajes_navir"), orderBy("fecha", "asc"));
-    
-    // onSnapshot mantiene la conexión viva
-    onSnapshot(q, (snapshot) => {
-        // Limpiamos las notas actuales antes de volver a dibujar
-        document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
-
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            renderizarNuevoRecuerdo(data.texto);
+        // Escuchar mensajes en tiempo real
+        const q = query(collection(db, "mensajes_navir"), orderBy("fecha", "asc"));
+        onSnapshot(q, (snapshot) => {
+            document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
+            snapshot.forEach((doc) => {
+                renderizarNuevoRecuerdo(doc.data().texto);
+            });
         });
-    });
-}
-
-// Llamamos a la función al iniciar
-cargarMensajes();
     }
 
     function renderizarNuevoRecuerdo(texto) {
         const div = document.createElement('div');
         const rot = Math.floor(Math.random() * 5) + 1;
-        
-        // Le agregamos 'nota-firebase' para poder identificarlas
         div.className = `memory-item note rot-${rot} nota-firebase`;
         div.style.width = '300px';
         div.style.textAlign = 'center';
-        
         div.innerHTML = `<p>"${texto}" <br><br><i class="fa-solid fa-heart" style="color: #e63946;"></i> - <em>Navir</em></p>`;
-        
         memoryBoard.appendChild(div);
     }
 });
