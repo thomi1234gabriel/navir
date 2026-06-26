@@ -191,18 +191,29 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // 3. Escuchar los mensajes en TIEMPO REAL
-        const q = query(collection(db, "mensajes_navir"), orderBy("fecha", "asc"));
-        
-        onSnapshot(q, (snapshot) => {
-            // Borramos solo las notas de Firebase para no duplicarlas y no borrar tus fotos
-            document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
+       // 3. Escuchar los mensajes en TIEMPO REAL y persistirlos
+import { getDocs } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js"; // Asegurate de agregar getDocs a tu import
 
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                renderizarNuevoRecuerdo(data.texto);
-            });
+// ... (dentro de tu DOMContentLoaded) ...
+
+// Función para cargar y mostrar los mensajes
+async function cargarMensajes() {
+    const q = query(collection(db, "mensajes_navir"), orderBy("fecha", "asc"));
+    
+    // onSnapshot mantiene la conexión viva
+    onSnapshot(q, (snapshot) => {
+        // Limpiamos las notas actuales antes de volver a dibujar
+        document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
+
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            renderizarNuevoRecuerdo(data.texto);
         });
+    });
+}
+
+// Llamamos a la función al iniciar
+cargarMensajes();
     }
 
     function renderizarNuevoRecuerdo(texto) {
