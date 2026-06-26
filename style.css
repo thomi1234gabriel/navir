@@ -661,18 +661,43 @@ h1, h2 {
     .parrafo-carta { font-size: 1rem; }
 }
 
-.btn-flotante {
-    position: fixed; bottom: 30px; right: 30px; background: var(--marron-suave);
-    color: white; border: none; border-radius: 50%; width: 60px; height: 60px;
-    font-size: 1.8rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.modal-oculto {
-    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
-}
+/* --- Estilo tierno para el modal --- */
 .modal-contenido {
-    background: #FFFDF9; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px;
+    background: #FFF5F7; /* Rosa muy clarito */
+    border: 3px solid #FFD1DC;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(255, 182, 193, 0.5);
+    padding: 30px;
 }
+
 .modal-contenido textarea {
-    width: 100%; height: 120px; margin: 20px 0; padding: 10px; border-radius: 10px;
+    border: 2px solid #FFD1DC;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    font-family: 'Caveat', cursive; /* Tu fuente a mano */
+    font-size: 1.3rem;
+}
+
+/* --- Estilo para el botón de borrar --- */
+.btn-borrar {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #ffb6c1;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0; /* Oculto por defecto */
+    transition: 0.3s;
+}
+
+.memory-item:hover .btn-borrar {
+    opacity: 1; /* Aparece al pasar el mouse */
+}
+
+.btn-borrar:hover {
+    color: #e63946;
+    transform: scale(1.2);
 }

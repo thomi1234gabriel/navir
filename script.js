@@ -126,9 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // LÓGICA PARA AGREGAR RECUERDOS (FIREBASE)
 // =========================================
 
-// 1. IMPORTACIONES (SIEMPRE ARRIBA DE TODO)
+// 1. IMPORTACIONES
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 // 2. CONFIGURACIÓN
 const firebaseConfig = {
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     textarea.value = "";
                     modal.style.display = 'none';
                 } catch (e) {
-                    console.error("Error: ", e);
+                    console.error("Error al guardar: ", e);
                     alert("Error al guardar.");
                 } finally {
                     btnGuardar.disabled = false;
@@ -197,18 +197,38 @@ document.addEventListener("DOMContentLoaded", () => {
         onSnapshot(q, (snapshot) => {
             document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
             snapshot.forEach((doc) => {
-                renderizarNuevoRecuerdo(doc.data().texto);
+                // Pasamos texto y ID
+                renderizarNuevoRecuerdo(doc.data().texto, doc.id);
             });
         });
     }
 
-    function renderizarNuevoRecuerdo(texto) {
+    // Función para renderizar con botón borrar
+    function renderizarNuevoRecuerdo(texto, id) {
         const div = document.createElement('div');
         const rot = Math.floor(Math.random() * 5) + 1;
+        
         div.className = `memory-item note rot-${rot} nota-firebase`;
         div.style.width = '300px';
         div.style.textAlign = 'center';
-        div.innerHTML = `<p>"${texto}" <br><br><i class="fa-solid fa-heart" style="color: #e63946;"></i> - <em>Navir</em></p>`;
+        div.style.position = 'relative';
+        
+        div.innerHTML = `
+            <button class="btn-borrar" title="Borrar mensaje"><i class="fa-solid fa-trash"></i></button>
+            <p>"${texto}" <br><br><i class="fa-solid fa-heart" style="color: #e63946;"></i> - <em>Navir</em></p>
+        `;
+
+        // Lógica de borrado
+        div.querySelector('.btn-borrar').addEventListener('click', async () => {
+            if(confirm("¿Querés borrar este recuerdito?")) {
+                try {
+                    await deleteDoc(doc(db, "mensajes_navir", id));
+                } catch (e) {
+                    console.error("Error al borrar: ", e);
+                }
+            }
+        });
+
         memoryBoard.appendChild(div);
     }
 });
