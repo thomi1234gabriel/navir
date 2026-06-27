@@ -1,3 +1,7 @@
+// 1. IMPORTACIONES DE FIREBASE (¡Siempre arriba de todo!)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
 // --- Lógica del Contador de Amor ---
 function actualizarContador() {
     const fechaInicio = new Date('2026-05-18T00:00:00');
@@ -27,7 +31,7 @@ function actualizarContador() {
     }
 }
 
-// --- Generador de copos de nieve (Optimizado y Suave) ---
+// --- Generador de copos de nieve ---
 function createSnowflakes() {
     const snowContainer = document.createElement('div');
     snowContainer.className = 'snow-container';
@@ -55,7 +59,6 @@ function createSnowflakes() {
             duration: duration * 1000,
             iterations: Infinity,
             easing: 'linear',
-            // ESTA LÍNEA ES LA MAGIA PARA QUE CAIGAN A DESTIEMPO
             delay: -(Math.random() * 15000) 
         });
         
@@ -67,18 +70,18 @@ function createSnowflakes() {
 window.onload = () => {
     createSnowflakes();
     actualizarContador();
-    setInterval(actualizarContador, 1000); // Actualiza cada segundo
+    setInterval(actualizarContador, 1000); 
 };
 
+// --- Reproductor de YouTube ---
 let player;
 let reproduciendo = false;
 
-function onYouTubeIframeAPIReady() {
-
+// Al ser un módulo, exponemos la función al objeto 'window'
+window.onYouTubeIframeAPIReady = function() {
     player = new YT.Player('player', {
         height: '0',
         width: '0',
-
         playerVars: {
             listType: 'playlist',
             list: 'PL7PKcN4RbDt8gKsiGeNC4SCRwv0e34HOc'
@@ -91,7 +94,6 @@ tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
 
 document.addEventListener("DOMContentLoaded", () => {
-
     const playBtn = document.getElementById("playBtn");
     const nextBtn = document.getElementById("nextBtn");
     const prevBtn = document.getElementById("prevBtn");
@@ -111,26 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
-            player.nextVideo();
-        });
+        nextBtn.addEventListener("click", () => player.nextVideo());
     }
-
     if (prevBtn) {
-        prevBtn.addEventListener("click", () => {
-            player.previousVideo();
-        });
+        prevBtn.addEventListener("click", () => player.previousVideo());
     }
 });
-// =========================================
-// LÓGICA PARA AGREGAR RECUERDOS (FIREBASE)
-// =========================================
 
-// 1. IMPORTACIONES
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
-// 2. CONFIGURACIÓN
+// --- Lógica de Firebase ---
 const firebaseConfig = {
     apiKey: "AIzaSyC3-ykjxnh4yC-8cThkoEGVPeH2boDwLFI",
     authDomain: "navir-b8bec.firebaseapp.com",
@@ -144,7 +134,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 3. LÓGICA PRINCIPAL
 document.addEventListener("DOMContentLoaded", () => {
     const btnAdd = document.getElementById('btn-add-memory');
     const modal = document.getElementById('modal-memory');
@@ -154,34 +143,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const memoryBoard = document.querySelector('.memory-board');
 
     if (btnAdd && modal && memoryBoard) {
-        
-        // Abrir modal
         btnAdd.addEventListener('click', () => {
-            modal.style.display = 'flex';
+            modal.classList.add('activo');
             textarea.focus();
         });
         
-        // Cerrar modal
         btnCerrar.addEventListener('click', () => {
-            modal.style.display = 'none';
+            modal.classList.remove('activo');
             textarea.value = ''; 
         });
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('activo');
+                textarea.value='';
+            }
+        });
 
-        // Guardar en Firebase
         btnGuardar.addEventListener('click', async () => {
             const texto = textarea.value.trim();
             if(texto !== "") {
                 try {
                     btnGuardar.disabled = true;
                     btnGuardar.innerText = "Guardando...";
-
                     await addDoc(collection(db, "mensajes_navir"), {
                         texto: texto,
                         fecha: new Date()
                     });
-
                     textarea.value = "";
-                    modal.style.display = 'none';
+                    modal.classList.remove('activo');
                 } catch (e) {
                     console.error("Error al guardar: ", e);
                     alert("Error al guardar.");
@@ -192,34 +181,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Escuchar mensajes en tiempo real
         const q = query(collection(db, "mensajes_navir"), orderBy("fecha", "asc"));
         onSnapshot(q, (snapshot) => {
             document.querySelectorAll('.nota-firebase').forEach(nota => nota.remove());
             snapshot.forEach((doc) => {
-                // Pasamos texto y ID
                 renderizarNuevoRecuerdo(doc.data().texto, doc.id);
             });
         });
     }
 
-    // Función para renderizar con botón borrar
     function renderizarNuevoRecuerdo(texto, id) {
         const div = document.createElement('div');
         const rot = Math.floor(Math.random() * 5) + 1;
         
         div.className = `memory-item note rot-${rot} nota-firebase`;
-        div.style.width = '300px';
-        div.style.textAlign = 'center';
-        div.style.position = 'relative';
         
         div.innerHTML = `
             <button class="btn-borrar" title="Borrar mensaje"><i class="fa-solid fa-trash"></i></button>
-            <p>"${texto}" <br><br><i class="fa-solid fa-heart" style="color: #e63946;"></i> - <em>Navir</em></p>
+            <div class="contenido-nota">
+                <p>"${texto}"</p>
+                <div class="firma">
+                    <i class="fa-solid fa-heart" style="color: #e63946;"></i> <em>Navir</em>
+                </div>
+            </div>
         `;
 
-        // Lógica de borrado
-        div.querySelector('.btn-borrar').addEventListener('click', async () => {
+        div.querySelector('.btn-borrar').addEventListener('click', async (e) => {
+            e.stopPropagation(); // Evita que se disparen otros eventos al borrar
             if(confirm("¿Querés borrar este recuerdito?")) {
                 try {
                     await deleteDoc(doc(db, "mensajes_navir", id));

@@ -661,101 +661,116 @@ h1, h2 {
     .parrafo-carta { font-size: 1rem; }
 }
 
-/* =========================================
-   AGREGAR RECUERDOS (Botón y Modal)
-   ========================================= */
-.btn-flotante {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: var(--marron-suave);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 1.8rem;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ===========================
+   MODAL MENSAJITOS
+=========================== */
+
+.btn-flotante{
+    position:fixed;
+    right:35px;
+    bottom:35px;
+    width:65px;
+    height:65px;
+    border:none;
+    border-radius:50%;
+    background:#d4b483;
+    color:#fff;
+    font-size:1.5rem;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+    transition:.3s;
+    z-index:1000;
 }
 
-.btn-flotante:hover {
-    transform: scale(1.1) rotate(90deg);
-    background: var(--texto-oscuro);
+.btn-flotante:hover{
+    transform:scale(1.08) rotate(90deg);
+    background:#b88d56;
 }
 
-.modal-oculto {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.6);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
+.modal-oculto{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    backdrop-filter:blur(5px);
 }
 
-.modal-contenido {
-    background: var(--fondo-claro);
-    padding: 30px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    border: 3px dashed var(--marron-suave);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+.modal-oculto.activo{
+    display:flex;
 }
 
-.modal-contenido textarea {
-    width: 100%;
-    height: 120px;
-    margin: 20px 0;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid var(--marron-suave);
-    font-family: var(--main-font);
-    font-size: 1.1rem;
-    resize: none;
-    background: var(--blanco-crema);
+.modal-contenido{
+    width:420px;
+    max-width:90%;
+    background:#fffefb;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+    border:2px solid rgba(212,180,131,.3);
+    animation:aparecer .35s ease;
 }
 
-.modal-contenido textarea:focus {
-    outline: none;
-    border-color: var(--texto-oscuro);
+@keyframes aparecer{
+    from{
+        transform:translateY(30px) scale(.9);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
 }
 
-.modal-botones {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
+.modal-contenido h3{
+    text-align:center;
+    margin-bottom:20px;
+    font-size:1.6rem;
+    color:#4A3B32;
 }
 
-.btn-cancelar {
-    background: #e63946;
-    color: white;
+#texto-nuevo-recuerdo{
+    width:100%;
+    height:180px;
+    resize:none;
+    border:2px solid #e8d8b6;
+    border-radius:12px;
+    padding:15px;
+    outline:none;
+    font-size:1rem;
+    font-family:'Nunito',sans-serif;
+    transition:.25s;
 }
 
-.btn-cancelar:hover {
-    background: #c1121f;
-}
-.btn-borrar {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: none;
-    border: none;
-    color: #ffb6c1;
-    font-size: 1.2rem;
-    cursor: pointer;
-    opacity: 0; /* Oculto por defecto */
-    transition: 0.3s;
+#texto-nuevo-recuerdo:focus{
+    border-color:#d4b483;
+    box-shadow:0 0 0 4px rgba(212,180,131,.25);
 }
 
-@media (max-width: 768px) {
-    .btn-flotante { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
+.modal-botones{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-top:20px;
+}
+
+.btn{
+    border:none;
+    padding:12px 20px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.25s;
+    background:#d4b483;
+    color:white;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-cancelar{
+    background:#888;
 }
