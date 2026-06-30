@@ -77,38 +77,34 @@ window.onload = () => {
 let player;
 let reproduciendo = false;
 
+// Al ser un módulo, exponemos la función al objeto 'window'
 window.onYouTubeIframeAPIReady = function() {
     player = new YT.Player('player', {
-        height: '0', 
+        height: '0',
         width: '0',
         playerVars: {
             listType: 'playlist',
-            list: 'PL7PKcN4RbDt8gKsiGeNC4SCRwv0e34HOc',
-            autoplay: 0 // Mejor empezar pausado
-        },
-        events: {
-            'onReady': () => console.log("Reproductor listo!")
+            list: 'PL7PKcN4RbDt8gKsiGeNC4SCRwv0e34HOc'
         }
     });
 }
 
-// Botones
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
 document.addEventListener("DOMContentLoaded", () => {
     const playBtn = document.getElementById("playBtn");
-    
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+
     if (playBtn) {
         playBtn.addEventListener("click", () => {
-            // Protección: si el player no cargó, no hacemos nada
-            if (!player) {
-                alert("El reproductor está cargando, esperá un seg...");
-                return;
-            }
-
-            if (!reproduciendo) {
+            if(!reproduciendo){
                 player.playVideo();
                 playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
                 reproduciendo = true;
-            } else {
+            }else{
                 player.pauseVideo();
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
                 reproduciendo = false;
@@ -116,9 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Asegurate de que los ID de los botones coincidan con tu HTML
-    document.getElementById("nextBtn")?.addEventListener("click", () => player?.nextVideo());
-    document.getElementById("prevBtn")?.addEventListener("click", () => player?.previousVideo());
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => player.nextVideo());
+    }
+    if (prevBtn) {
+        prevBtn.addEventListener("click", () => player.previousVideo());
+    }
 });
 
 // --- Lógica de Firebase ---

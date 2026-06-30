@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda - Navir 💍</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> <!-- Mantiene tu estilo base -->
+    <link rel="stylesheet" href="boda.css">  <!-- Estilos exclusivos de la boda -->
+</head>
+<body class="boda-body">
+
+    <div class="game-container container-especial">
+        <h1 class="boda-title">Para mi amor <i class="fa-solid fa-ring"></i></h1>
+        <p class="subtitle">Siete momentos, siete mensajes... toca cada sobre</p>
+
+        <!-- Contenedor donde estarán las 7 cartas dispersas -->
+        <div class="cartas-scattered">
+            <div class="carta-boda" data-id="1"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="carta-boda" data-id="2"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="carta-boda" data-id="3"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="carta-boda" data-id="4"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="carta-boda" data-id="5"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="carta-boda" data-id="6"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div class="carta-boda" data-id="7"><i class="fa-solid fa-envelope-open-text"></i></div>
+        </div>
+
+        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</a>
+    </div>
+
+    <!-- Modal Romántico (Pop-up) -->
+    <div id="modal-boda" class="modal-oculto">
+        <div class="modal-contenido modal-elegante">
+            <button class="btn-cerrar-boda"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-decoracion"><i class="fa-solid fa-dove"></i></div>
+            <h3 id="modal-titulo">Mensaje</h3>
+            <p id="modal-mensaje" class="mensaje-romantico"></p>
+            <div class="firma-boda"><i class="fa-solid fa-heart">🤍</i></div>
+        </div>
+    </div>
+
+    <script src="boda.js"></script>
+</body>
+</html>
