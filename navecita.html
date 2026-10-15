@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Misión Amor - Navir 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="arcade.css">
+</head>
+<body class="game-body">
+    <div class="glass-container">
+        <header class="game-header">
+            <div class="title-area">
+                <h2>Caseria espacial<i class="fa-solid fa-heart floating-heart"></i></h2>
+                <a href="juegos.html" class="btn-icon"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+            </div>
+            
+            <div class="stats-board">
+                <div class="score-display">Puntos: <span id="score">0</span></div>
+                <div class="health-container">
+                    <i class="fa-solid fa-shield-heart health-icon"></i>
+                    <div class="health-bar-wrapper">
+                        <div id="health-bar" class="health-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tienda de mejoras -->
+        <div class="shop-panel">
+            <div class="shop-item">
+                <button id="btn-doble" class="btn-shop">
+                    <i class="fa-solid fa-angles-up"></i> Tiro Doble (50 pts)
+                </button>
+                <div class="cooldown-bar"><div id="cd-doble" class="cd-fill"></div></div>
+            </div>
+            <div class="shop-item">
+                <button id="btn-potente" class="btn-shop">
+                    <i class="fa-solid fa-bolt"></i> Tiro Potente (100 pts)
+                </button>
+                <div class="cooldown-bar"><div id="cd-potente" class="cd-fill"></div></div>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <!-- Mensaje de alerta del Jefe -->
+            <div id="boss-warning" class="boss-warning hidden">
+                <i class="fa-solid fa-triangle-exclamation"></i> ¡JEFE ACERCÁNDOSE!
+            </div>
+
+            <!-- Pantalla de Game Over superpuesta -->
+            <div id="game-over-screen" class="game-over-screen hidden">
+                <h3>¡Misión Fallida!</h3>
+                <p>Puntuación final: <span id="final-score" class="highlight-score">0</span></p>
+                <button id="btn-restart" class="btn-action pulse-anim"><i class="fa-solid fa-rotate-right"></i> Volver a Intentar</button>
+            </div>
+
+            <canvas id="gameCanvas" width="400" height="500"></canvas>
+        </div>
+
+        <!-- Controles táctiles para móviles -->
+        <div class="mobile-controls">
+            <button id="btn-left" class="btn-control"><i class="fa-solid fa-caret-left"></i></button>
+            <button id="btn-shoot" class="btn-control action-btn"><i class="fa-solid fa-fire"></i></button>
+            <button id="btn-right" class="btn-control"><i class="fa-solid fa-caret-right"></i></button>
+        </div>
+    </div>
+
+    <script src="navecita.js"></script>
+</body>
+</html>

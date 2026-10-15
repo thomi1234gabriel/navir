@@ -31,41 +31,6 @@ function actualizarContador() {
     }
 }
 
-// --- Generador de copos de nieve ---
-function createSnowflakes() {
-    const snowContainer = document.createElement('div');
-    snowContainer.className = 'snow-container';
-    document.body.appendChild(snowContainer);
-
-    const isMobile = window.innerWidth < 768;
-    const snowFlakesCount = isMobile ? 20 : 50;
-
-    for (let i = 0; i < snowFlakesCount; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.className = 'snowflake';
-        snowflake.innerHTML = '<i class="fa-solid fa-snowflake"></i>';
-        
-        const startLeft = Math.random() * 100;
-        const duration = Math.random() * 5 + 5;
-        const size = Math.random() * 10 + 10;
-
-        snowflake.style.left = `${startLeft}vw`;
-        snowflake.style.fontSize = `${size}px`;
-        
-        snowflake.animate([
-            { transform: 'translate3d(0, -10vh, 0) rotate(0deg)' },
-            { transform: `translate3d(${Math.random() * 40 - 20}px, 110vh, 0) rotate(360deg)` }
-        ], {
-            duration: duration * 1000,
-            iterations: Infinity,
-            easing: 'linear',
-            delay: -(Math.random() * 15000) 
-        });
-        
-        snowContainer.appendChild(snowflake);
-    }
-}
-
 // Inicialización
 window.onload = () => {
     createSnowflakes();
@@ -240,3 +205,30 @@ function configurarFavicon() {
 
 // Llamalo cuando cargue la página
 window.addEventListener('load', configurarFavicon);
+
+// --- Lógica del Botón de Modo Oscuro/Claro ---
+document.addEventListener("DOMContentLoaded", () => {
+    const btnTheme = document.getElementById('theme-toggle');
+    if (btnTheme) {
+        // Verificar si ya hay un tema guardado en el navegador
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            btnTheme.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        }
+
+        btnTheme.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            let theme = 'light';
+            
+            if (document.body.classList.contains('dark-mode')) {
+                theme = 'dark';
+                btnTheme.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            } else {
+                btnTheme.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            }
+            // Guardar preferencia
+            localStorage.setItem('theme', theme);
+        });
+    }
+});

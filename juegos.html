@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Juegos - Navir 🐾</title>
+    <title>Mini Juegos - Navir 🤍</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="arcade.css">
 </head>
 <body>
     <div class="game-container">
         <h2>Arcade <i class="fa-solid fa-headset" style="color: var(--marron-suave);"></i></h2>
-        <br>
-        <div class="cancion-card" style="text-align: center;">
-            <h3 style="font-size: 2.5rem; color: var(--texto-oscuro);"><i class="fa-solid fa-ghost"></i> Próximamente</h3>
-            <p style="margin-top: 15px; font-size: 1.2rem; font-family: var(--main-font);">Cargando los minijuegos para Navir...</p>
+        <p class="subtitle">Selecciona una aventura espacial para jugar juntos</p>
+        
+        <div class="arcade-grid">
+            <!-- Tarjeta del Juego de la Navecita -->
+            <div class="arcade-card">
+                <div class="arcade-icon">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <h3>Caseria espacial</h3>
+                <p>Destruye los obstáculos y junta puntos para comprar mejoras.</p>
+                <a href="navecita.html" class="btn-game btn-play">Jugar Ahora <i class="fa-solid fa-play"></i></a>
+            </div>
+
+            <!-- Espacio para futuros juegos -->
+            <div class="arcade-card locked">
+                <div class="arcade-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3>Próximamente</h3>
+                <p>Más sorpresas en desarrollo...</p>
+            </div>
         </div>
+
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Menú</a>
     </div>
     <script src="script.js"></script>

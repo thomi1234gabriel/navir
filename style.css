@@ -1,24 +1,48 @@
 /* Importar Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:ital,wght@0,400;0,700;0,900;1,400&display=swap');
 
+/* ===========================
+   VARIABLES Y ESTILO GENERAL
+   =========================== */
 :root {
-    /* Paleta cálida, juguetona y tierno */
-    --fondo-claro: #FDF6E3;      
-    --fondo-medio: #E6D5B8;      
-    --marron-suave: #D4B483;     
-    --texto-oscuro: #4A3B32;     
-    --texto-medio: #735D4E;      
-    --blanco-crema: #FFFDF9;     
-    
+    --bg-color: #fffefb; /* Beige claro */
+    --texto-oscuro: #4a3b32; /* Marrón oscuro */
+    --marron-suave: #8d7154; /* Marrón medio */
+    --detalles: #b88d56; /* Ocre/Dorado */
+    --acento-rojo: #e63946;
+    --acento-naranja: #fca311;
     --main-font: 'Nunito', sans-serif;
-    --hand-font: 'Caveat', cursive; 
 }
 
-* {
+.game-body {
+    background-color: var(--bg-color);
+    background-image: radial-gradient(var(--detalles) 1px, transparent 1px);
+    background-size: 30px 30px;
+    font-family: var(--main-font);
+    color: var(--texto-oscuro);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    padding: 10px;
 }
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(74, 59, 50, 0.15);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 
 body {
     background: linear-gradient(135deg, var(--fondo-claro), var(--fondo-medio), var(--marron-suave));
@@ -38,23 +62,6 @@ body {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
-}
-
-/* EFECTO NIEVE */
-.snow-container {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    pointer-events: none;
-    z-index: 0; 
-    overflow: hidden;
-}
-
-.snowflake {
-    position: absolute;
-    top: -10vh;
-    color: rgba(255, 255, 255, 0.9); 
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-    will-change: transform; 
 }
 
 /* Contenedor principal */
@@ -222,7 +229,7 @@ h1, h2 {
 }
 
 .polaroid {
-    background: #fff;
+    background: #fdcc83;
     padding: 15px 15px 45px 15px;
     border-radius: 4px;
     width: 260px;
@@ -234,7 +241,7 @@ h1, h2 {
 }
 
 .note {
-    background: #FFFDF9; 
+    background: #f3e8d1; 
     color: var(--texto-oscuro);
     padding: 25px;
     border-radius: 5px;
@@ -773,4 +780,82 @@ h1, h2 {
 
 .btn-cancelar{
     background:#888;
+}
+
+/* ===========================
+   ESTILOS DEL ARCADE Y NAVECITA
+   =========================== */
+.arcade-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.arcade-card {
+    background: rgba(255, 253, 249, 0.9);
+    border: 2px solid var(--marron-suave);
+    border-radius: 20px;
+    padding: 25px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(74, 59, 50, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.arcade-card:hover {
+    transform: translateY(-10px);
+}
+
+.arcade-card.locked {
+    opacity: 0.7;
+    border-style: dashed;
+}
+
+.arcade-icon {
+    font-size: 3rem;
+    color: var(--marron-suave);
+    margin-bottom: 15px;
+}
+
+.btn-play {
+    margin-top: 15px;
+    font-size: 1rem;
+    padding: 10px;
+}
+
+/* Lienzo del juego */
+.canvas-container {
+    padding: 20px;
+    max-width: 500px;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.score-board {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--texto-oscuro);
+    background: rgba(255, 255, 255, 0.6);
+    padding: 5px 15px;
+    border-radius: 15px;
+    border: 2px dashed var(--marron-suave);
+}
+
+#gameCanvas {
+    background: #2b2b2b;
+    border-radius: 15px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 4/5;
+    display: block;
+    margin: 0 auto;
 }
